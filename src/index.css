@@ -1,5 +1,5 @@
 :root {
-  --ink: #f3ead7;
+  --ink: #e4f0e2;
   --display: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Palatino, serif;
   --body: 'Figtree', 'Segoe UI', sans-serif;
 
@@ -9,7 +9,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--ink);
-  background: #06080d;
+  background: #07110c;
 }
 
 *,
