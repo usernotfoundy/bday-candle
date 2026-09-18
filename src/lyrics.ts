@@ -9,9 +9,9 @@ export type LyricStanza = {
 }
 
 export const LYRICS: LyricStanza[] = [
-  { text: 'Papa pwet si Pryam', beats: 6 },
-  { text: 'Papa pwet si Pryam', beats: 6 },
-  { text: 'Happy birthday dear Pryam', beats: 6 },
+  { text: 'Happy birthday Pryam', beats: 6 },
+  { text: 'Happy birthday Pryam', beats: 6 },
+  { text: 'Happy birthday bro Pryam', beats: 6 },
   { text: 'Papa pwet na', beats: 3 },
   { text: 'ulit yan', beats: 2 },
 ]
