@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Candle } from './components/Candle'
+import { Lyrics } from './components/Lyrics'
 import { useBlowDetection } from './hooks/useBlowDetection'
 import { playHappyBirthday, stopHappyBirthday } from './audio/happyBirthday'
 import './App.css'
@@ -27,6 +28,7 @@ function statusLabel(
 function App() {
   const [lit, setLit] = useState(true)
   const [singing, setSinging] = useState(false)
+  const [stanzaIndex, setStanzaIndex] = useState(-1)
   const { status, strength, start, isListening } = useBlowDetection()
 
   useEffect(() => {
@@ -38,8 +40,12 @@ function App() {
   const handleExtinguished = useCallback(() => {
     setLit(false)
     setSinging(true)
-    void playHappyBirthday().then((result) => {
+    setStanzaIndex(0)
+    void playHappyBirthday({
+      onStanza: (index) => setStanzaIndex(index),
+    }).then((result) => {
       setSinging(false)
+      setStanzaIndex(-1)
       if (result === 'finished') setLit(true)
     })
   }, [])
@@ -47,6 +53,7 @@ function App() {
   const handleReset = () => {
     stopHappyBirthday()
     setSinging(false)
+    setStanzaIndex(-1)
     setLit(true)
     if (!isListening) void start()
   }
@@ -58,6 +65,7 @@ function App() {
 
       <header className="brand">
         <p className="brand-mark">Wishlight</p>
+        <Lyrics activeIndex={stanzaIndex} visible={singing} />
       </header>
 
       <main className="hero">

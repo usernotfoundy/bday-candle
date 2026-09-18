@@ -1,3 +1,5 @@
+import { LYRICS } from '../lyrics'
+
 /**
  * Tiny-device a cappella "Happy Birthday" via Web Audio.
  * Soft vowel-like tones with vibrato — like a music-box throat.
@@ -39,10 +41,11 @@ const MELODY: Note[] = [
 ]
 
 const BPM = 96
-const BEAT = 60 / BPM
+export const BEAT = 60 / BPM
 
 let sharedCtx: AudioContext | null = null
 let stopCurrent: (() => void) | null = null
+let stanzaTimers: number[] = []
 
 function getContext() {
   if (!sharedCtx || sharedCtx.state === 'closed') {
@@ -135,15 +138,24 @@ function scheduleVoiceNote(
 
 /** Stop any currently playing birthday song. */
 export function stopHappyBirthday() {
+  for (const id of stanzaTimers) window.clearTimeout(id)
+  stanzaTimers = []
   stopCurrent?.()
   stopCurrent = null
+}
+
+type PlayOptions = {
+  onStanza?: (index: number) => void
 }
 
 /**
  * Plays a cute device-style a cappella Happy Birthday.
  * Resolves with `'finished'` when the song ends, or `'stopped'` if interrupted.
  */
-export async function playHappyBirthday(): Promise<'finished' | 'stopped'> {
+export async function playHappyBirthday(
+  options: PlayOptions = {},
+): Promise<'finished' | 'stopped'> {
+  const { onStanza } = options
   stopHappyBirthday()
 
   const ctx = getContext()
@@ -176,6 +188,16 @@ export async function playHappyBirthday(): Promise<'finished' | 'stopped'> {
     t += dur
   }
 
+  // Schedule lyric stanza highlights from editable LYRICS timing.
+  onStanza?.(0)
+  let stanzaAt = LYRICS[0]?.beats ? LYRICS[0].beats * BEAT : 0
+  for (let index = 1; index < LYRICS.length; index++) {
+    const delayMs = (0.12 + stanzaAt) * 1000
+    const id = window.setTimeout(() => onStanza?.(index), delayMs)
+    stanzaTimers.push(id)
+    stanzaAt += LYRICS[index].beats * BEAT
+  }
+
   const endAt = t + 0.15
 
   return new Promise((resolve) => {
@@ -183,6 +205,7 @@ export async function playHappyBirthday(): Promise<'finished' | 'stopped'> {
     const timer = window.setTimeout(() => {
       if (settled) return
       settled = true
+      stanzaTimers = []
       stopCurrent = null
       master.disconnect()
       resolve('finished')
@@ -192,6 +215,8 @@ export async function playHappyBirthday(): Promise<'finished' | 'stopped'> {
       if (settled) return
       settled = true
       window.clearTimeout(timer)
+      for (const id of stanzaTimers) window.clearTimeout(id)
+      stanzaTimers = []
       const now = ctx.currentTime
       master.gain.cancelScheduledValues(now)
       master.gain.setValueAtTime(master.gain.value, now)
