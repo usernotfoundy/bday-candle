@@ -1,12 +1,15 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Candle } from './components/Candle'
 import { useBlowDetection } from './hooks/useBlowDetection'
+import { playHappyBirthday, stopHappyBirthday } from './audio/happyBirthday'
 import './App.css'
 
 function statusLabel(
   status: ReturnType<typeof useBlowDetection>['status'],
   lit: boolean,
+  singing: boolean,
 ) {
+  if (singing) return 'A little voice is singing for you…'
   if (!lit) return 'Make a wish — then reset the candle when you are ready.'
   switch (status) {
     case 'idle':
@@ -23,17 +26,24 @@ function statusLabel(
 
 function App() {
   const [lit, setLit] = useState(true)
+  const [singing, setSinging] = useState(false)
   const { status, strength, start, isListening } = useBlowDetection()
 
   useEffect(() => {
     void start()
   }, [start])
 
+  useEffect(() => () => stopHappyBirthday(), [])
+
   const handleExtinguished = useCallback(() => {
     setLit(false)
+    setSinging(true)
+    void playHappyBirthday().finally(() => setSinging(false))
   }, [])
 
   const handleReset = () => {
+    stopHappyBirthday()
+    setSinging(false)
     setLit(true)
     if (!isListening) void start()
   }
@@ -56,7 +66,7 @@ function App() {
 
         <div className="hero-copy">
           <h1>Blow out the candle</h1>
-          <p>{statusLabel(status, lit)}</p>
+          <p>{statusLabel(status, lit, singing)}</p>
         </div>
 
         <div className="actions">
