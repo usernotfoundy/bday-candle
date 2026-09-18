@@ -38,7 +38,10 @@ function App() {
   const handleExtinguished = useCallback(() => {
     setLit(false)
     setSinging(true)
-    void playHappyBirthday().finally(() => setSinging(false))
+    void playHappyBirthday().then((result) => {
+      setSinging(false)
+      if (result === 'finished') setLit(true)
+    })
   }, [])
 
   const handleReset = () => {

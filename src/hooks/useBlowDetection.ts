@@ -22,10 +22,10 @@ type Options = {
 }
 
 const defaultOptions = {
-  noiseFloor: 0.02,
-  peakLevel: 0.18,
-  attack: 0.45,
-  release: 0.12,
+  noiseFloor: 0.045,
+  peakLevel: 0.32,
+  attack: 0.28,
+  release: 0.18,
 } as const
 
 function clamp01(n: number) {

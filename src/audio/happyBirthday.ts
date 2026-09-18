@@ -141,9 +141,9 @@ export function stopHappyBirthday() {
 
 /**
  * Plays a cute device-style a cappella Happy Birthday.
- * Returns a promise that resolves when the song finishes (or is stopped).
+ * Resolves with `'finished'` when the song ends, or `'stopped'` if interrupted.
  */
-export async function playHappyBirthday(): Promise<void> {
+export async function playHappyBirthday(): Promise<'finished' | 'stopped'> {
   stopHappyBirthday()
 
   const ctx = getContext()
@@ -179,18 +179,18 @@ export async function playHappyBirthday(): Promise<void> {
   const endAt = t + 0.15
 
   return new Promise((resolve) => {
-    let finished = false
+    let settled = false
     const timer = window.setTimeout(() => {
-      if (finished) return
-      finished = true
+      if (settled) return
+      settled = true
       stopCurrent = null
       master.disconnect()
-      resolve()
+      resolve('finished')
     }, (endAt - ctx.currentTime) * 1000 + 50)
 
     stopCurrent = () => {
-      if (finished) return
-      finished = true
+      if (settled) return
+      settled = true
       window.clearTimeout(timer)
       const now = ctx.currentTime
       master.gain.cancelScheduledValues(now)
@@ -202,7 +202,7 @@ export async function playHappyBirthday(): Promise<void> {
         } catch {
           /* already gone */
         }
-        resolve()
+        resolve('stopped')
       }, 100)
     }
   })

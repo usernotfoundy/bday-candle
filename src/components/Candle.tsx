@@ -12,9 +12,9 @@ type CandleProps = {
 }
 
 /** Sustained blow above this extinguishes the flame. */
-const EXTINGUISH_STRENGTH = 0.55
+const EXTINGUISH_STRENGTH = 0.78
 /** How long (ms) the blow must stay strong before going out. */
-const EXTINGUISH_HOLD_MS = 280
+const EXTINGUISH_HOLD_MS = 650
 
 export function Candle({ blowStrength, lit, onExtinguished }: CandleProps) {
   const rootRef = useRef<HTMLDivElement>(null)
