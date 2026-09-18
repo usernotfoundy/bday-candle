@@ -64,6 +64,7 @@ function App() {
         <Candle
           blowStrength={lit && isListening ? strength : 0}
           lit={lit}
+          smoking={singing}
           onExtinguished={handleExtinguished}
         />
 

@@ -278,23 +278,57 @@
   filter: blur(0.4px);
 }
 
+.smoke-layer {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  width: 64px;
+  height: 120px;
+  margin-left: -32px;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 2;
+}
+
 .smoke {
   position: absolute;
   left: 50%;
-  bottom: 28px;
-  width: 18px;
-  height: 40px;
-  margin-left: -9px;
-  border-radius: 40% 60% 55% 45%;
+  bottom: 0;
+  width: 16px;
+  height: 36px;
+  margin-left: -8px;
+  border-radius: 45% 55% 50% 50%;
   background: linear-gradient(
     180deg,
-    rgba(180, 200, 185, 0.5),
-    rgba(120, 140, 125, 0.05)
+    rgba(200, 215, 205, 0.55) 0%,
+    rgba(160, 175, 165, 0.2) 55%,
+    rgba(120, 140, 125, 0) 100%
   );
-  filter: blur(4px);
+  filter: blur(5px);
   opacity: 0;
-  pointer-events: none;
+  transform-origin: 50% 100%;
   will-change: transform, opacity;
+}
+
+.smoke-1 {
+  width: 20px;
+  height: 42px;
+  margin-left: -10px;
+  filter: blur(6px);
+}
+
+.smoke-2 {
+  width: 14px;
+  height: 32px;
+  margin-left: -7px;
+  filter: blur(4.5px);
+}
+
+.smoke-3 {
+  width: 22px;
+  height: 48px;
+  margin-left: -11px;
+  filter: blur(7px);
 }
 
 .wick-ember {

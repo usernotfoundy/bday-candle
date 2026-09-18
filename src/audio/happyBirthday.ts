@@ -65,8 +65,8 @@ function scheduleVoiceNote(
   const end = start + duration
   const voiceGain = ctx.createGain()
   voiceGain.gain.setValueAtTime(0, start)
-  voiceGain.gain.linearRampToValueAtTime(0.22, start + 0.045)
-  voiceGain.gain.setValueAtTime(0.2, end - Math.min(0.12, duration * 0.35))
+  voiceGain.gain.linearRampToValueAtTime(0.38, start + 0.045)
+  voiceGain.gain.setValueAtTime(0.34, end - Math.min(0.12, duration * 0.35))
   voiceGain.gain.exponentialRampToValueAtTime(0.001, end)
   voiceGain.connect(dest)
 
@@ -150,7 +150,7 @@ export async function playHappyBirthday(): Promise<'finished' | 'stopped'> {
   await ctx.resume()
 
   const master = ctx.createGain()
-  master.gain.value = 0.85
+  master.gain.value = 1.35
 
   // Soft speaker cabinet feel
   const lowpass = ctx.createBiquadFilter()
