@@ -1,0 +1,418 @@
+.scene {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  color: var(--ink);
+}
+
+.scene-wash {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(
+      ellipse 80% 55% at 50% 72%,
+      rgba(255, 168, 76, 0.22) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 120% 80% at 50% 100%,
+      #1a2433 0%,
+      #0b1018 48%,
+      #06080d 100%
+    ),
+    linear-gradient(180deg, #152033 0%, #0a0e16 100%);
+}
+
+.scene-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 45%, transparent 40%, rgba(4, 6, 10, 0.55) 100%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.9;
+}
+
+.brand {
+  padding: 1.75rem 1.5rem 0;
+  text-align: center;
+}
+
+.brand-mark {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(2.4rem, 7vw, 3.6rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: #f6e7c8;
+  text-shadow: 0 0 40px rgba(255, 186, 90, 0.25);
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 0 1.25rem 2.5rem;
+  text-align: center;
+}
+
+.hero-copy {
+  max-width: 28rem;
+}
+
+.hero-copy h1 {
+  margin: 0 0 0.45rem;
+  font-family: var(--display);
+  font-size: clamp(1.55rem, 4.2vw, 2.15rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: #f3ead7;
+}
+
+.hero-copy p {
+  margin: 0;
+  font-family: var(--body);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgba(232, 220, 198, 0.72);
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--body);
+  font-size: 0.95rem;
+  font-weight: 560;
+  letter-spacing: 0.01em;
+  padding: 0.85rem 1.45rem;
+  border-radius: 999px;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.btn.primary {
+  color: #1a1208;
+  background: linear-gradient(180deg, #ffd89a 0%, #f0a84a 100%);
+  box-shadow:
+    0 0 0 1px rgba(255, 220, 160, 0.35),
+    0 10px 28px rgba(240, 150, 50, 0.28);
+}
+
+.btn.primary:hover {
+  background: linear-gradient(180deg, #ffe2b0 0%, #f5b45a 100%);
+  box-shadow:
+    0 0 0 1px rgba(255, 230, 180, 0.45),
+    0 12px 32px rgba(240, 150, 50, 0.36);
+}
+
+.btn:focus-visible {
+  outline: 2px solid #ffd89a;
+  outline-offset: 3px;
+}
+
+.breath-meter {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.65rem;
+  width: min(16rem, 70vw);
+  margin-top: 0.25rem;
+}
+
+.breath-label {
+  font-family: var(--body);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(232, 220, 198, 0.55);
+}
+
+.breath-track {
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.breath-fill {
+  height: 100%;
+  width: 100%;
+  transform-origin: left center;
+  transform: scaleX(0);
+  border-radius: inherit;
+  background: linear-gradient(90deg, #f0b35a, #ff7a3d);
+  box-shadow: 0 0 12px rgba(255, 140, 60, 0.55);
+  will-change: transform;
+}
+
+/* —— Candle —— */
+.candle-stage {
+  position: relative;
+  width: min(280px, 72vw);
+  height: min(420px, 58svh);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.candle-glow {
+  position: absolute;
+  left: 50%;
+  top: 18%;
+  width: 220px;
+  height: 220px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 190, 90, 0.55) 0%,
+    rgba(255, 120, 40, 0.18) 38%,
+    transparent 70%
+  );
+  filter: blur(8px);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.candle {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 72px;
+}
+
+.flame-wrap {
+  position: relative;
+  width: 48px;
+  height: 78px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: -2px;
+}
+
+.flame {
+  position: relative;
+  width: 28px;
+  height: 56px;
+  transform-origin: 50% 100%;
+  will-change: transform, opacity;
+  filter: drop-shadow(0 0 10px rgba(255, 170, 60, 0.85));
+}
+
+.flame-outer,
+.flame-inner,
+.flame-core {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  transform: translateX(-50%);
+}
+
+.flame-outer {
+  width: 28px;
+  height: 56px;
+  background: linear-gradient(
+    180deg,
+    #ffb347 0%,
+    #ff7a2e 45%,
+    #e8481a 100%
+  );
+}
+
+.flame-inner {
+  width: 16px;
+  height: 36px;
+  bottom: 4px;
+  background: linear-gradient(180deg, #fff6c8 0%, #ffe07a 55%, #ff9a3c 100%);
+  transform-origin: 50% 100%;
+  will-change: transform;
+}
+
+.flame-core {
+  width: 7px;
+  height: 16px;
+  bottom: 6px;
+  background: #fffdf2;
+  opacity: 0.95;
+  filter: blur(0.4px);
+}
+
+.smoke {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  width: 18px;
+  height: 40px;
+  margin-left: -9px;
+  border-radius: 40% 60% 55% 45%;
+  background: linear-gradient(
+    180deg,
+    rgba(200, 210, 220, 0.55),
+    rgba(160, 170, 180, 0.05)
+  );
+  filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.wick-ember {
+  position: absolute;
+  left: 50%;
+  bottom: 2px;
+  width: 5px;
+  height: 5px;
+  margin-left: -2.5px;
+  border-radius: 50%;
+  background: #ff9a4a;
+  box-shadow: 0 0 8px #ff7a2e;
+  opacity: 0;
+}
+
+.wick {
+  width: 3px;
+  height: 14px;
+  border-radius: 1px;
+  background: linear-gradient(180deg, #2a2218, #4a3a28);
+  margin-bottom: -1px;
+  z-index: 0;
+}
+
+.wax {
+  position: relative;
+  width: 54px;
+  height: 150px;
+  border-radius: 6px 6px 10px 10px / 8px 8px 14px 14px;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      transparent 28%,
+      transparent 72%,
+      rgba(0, 0, 0, 0.12) 100%
+    ),
+    linear-gradient(180deg, #fff4d8 0%, #f2d7a0 38%, #e8c078 100%);
+  box-shadow:
+    inset 0 8px 12px rgba(255, 255, 255, 0.25),
+    inset 0 -10px 16px rgba(160, 110, 40, 0.18),
+    0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+.wax-shine {
+  position: absolute;
+  top: 18%;
+  left: 14%;
+  width: 10px;
+  height: 42%;
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.55),
+    rgba(255, 255, 255, 0)
+  );
+  opacity: 0.55;
+}
+
+.wax-drip {
+  position: absolute;
+  top: -2px;
+  left: 18px;
+  width: 10px;
+  height: 28px;
+  border-radius: 0 0 8px 8px;
+  background: linear-gradient(180deg, #fff8e4, #f0d090);
+  box-shadow: 2px 0 0 rgba(0, 0, 0, 0.04);
+}
+
+.holder {
+  position: relative;
+  width: 78px;
+  margin-top: -4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.holder-rim {
+  width: 78px;
+  height: 10px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #c9a25a, #8a6a32);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}
+
+.holder-body {
+  width: 64px;
+  height: 28px;
+  margin-top: -5px;
+  border-radius: 0 0 8px 8px;
+  background: linear-gradient(180deg, #9a7540 0%, #5c4424 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 220, 150, 0.2);
+}
+
+.table-plane {
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  width: 180%;
+  height: 28%;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    rgba(255, 170, 80, 0.12) 0%,
+    transparent 55%
+  );
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .brand {
+    padding-top: 1.25rem;
+  }
+
+  .candle-stage {
+    height: min(360px, 52svh);
+  }
+
+  .wax {
+    height: 128px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flame,
+  .flame-inner,
+  .candle-glow,
+  .smoke,
+  .breath-fill {
+    transition: none !important;
+  }
+}
