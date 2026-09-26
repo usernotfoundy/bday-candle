@@ -12,6 +12,6 @@ export const LYRICS: LyricStanza[] = [
   { text: 'Happy birthday Pryam', beats: 6 },
   { text: 'Happy birthday Pryam', beats: 6 },
   { text: 'Happy birthday bro Pryam', beats: 6 },
-  { text: 'Papa pwet na', beats: 3 },
-  { text: 'ulit yan', beats: 2 },
+  { text: 'Happy birthday', beats: 3 },
+  { text: 'To you', beats: 2 },
 ]
